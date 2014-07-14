@@ -1,6 +1,6 @@
 require "sinatra"
 require "active_record"
-require "./lib/database_connection"
+require "gschool_database_connection"
 require "rack-flash"
 
 class App < Sinatra::Application
@@ -9,7 +9,7 @@ class App < Sinatra::Application
 
   def initialize
     super
-    @database_connection = DatabaseConnection.establish(ENV["RACK_ENV"])
+    @database_connection = GschoolDatabaseConnection::DatabaseConnection.establish(ENV["RACK_ENV"])
 
   end
 

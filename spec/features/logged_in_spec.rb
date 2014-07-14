@@ -11,6 +11,6 @@ feature "logged in user" do
     click_button "Login"
 
 
-    expect(page).to have_content("Logout")
+    expect(page).to have_button("Logout")
   end
 end
