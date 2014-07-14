@@ -23,7 +23,7 @@ feature "Login" do
 
       click_button "Login"
 
-      expect(page).to have_content("Welcome, pgrunde!")
+      expect(page).to have_content("Welcome, pgrunde")
 
     end
 end

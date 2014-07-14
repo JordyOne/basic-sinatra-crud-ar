@@ -14,12 +14,20 @@ class App < Sinatra::Application
   end
 
   get "/" do
-    erb :homepage
+
+
+    if session[:id]
+      erb :logged_in, locals: {:username => current_user_name}
+    else
+      erb :homepage
+    end
   end
 
   post "/" do
-    @database_connection.sql("INSERT INTO users (username) VALUES ('#{params[:username]}');")
-  redirect "/"
+    @database_connection.sql("INSERT INTO users (username, password) VALUES ('#{params[:username]}', '#{params[:password]}');")
+    id_hash= (@database_connection.sql("SELECT id FROM users WHERE username = '#{params[:username]}' AND password = '#{params[:password]}'"))
+    session[:id] = id_hash.first.fetch("id")
+    redirect "/"
   end
 
   get "/registration/new" do
@@ -31,4 +39,22 @@ class App < Sinatra::Application
 
     redirect "/"
   end
+
+  post "/logout" do
+    session.clear
+    flash[:notice] = "Thank you! Come again!"
+    redirect "/"
+
+  end
+
+  private
+
+  def current_user_name
+
+
+    @database_connection.sql("SELECT username from users where id = '#{session[:id]}'").first.fetch('username')
+
+  end
+
+
 end
