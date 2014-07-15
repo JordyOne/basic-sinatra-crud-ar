@@ -1,0 +1,105 @@
+.or_class {
+    text-align: center;
+    vertical-align: middle;
+    line-height: 100px;
+    height: 100px;
+
+}
+
+li {
+    list-style: none;
+    width: 100%;
+}
+.register_link {
+    margin: auto;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 100px;
+    background-color: gray;
+    height: 100px;
+    width: 100%;
+}
+
+.gutter {
+    width: 25%;
+    display: inline-block;
+}
+
+.content{
+    width: 50%;
+    display: inline-block;
+}
+
+.unordered_list {
+    margin:auto;
+    padding-left: 0;
+    padding-right: 5px;
+    text_align: left;
+    width: 100%;
+}
+
+.list_item {
+    width: 100%;
+}
+
+body {
+    background-color: white;
+
+}
+
+
+header {
+    background-color: white;  /* Dark Grey */
+}
+
+header img {
+    width: 300px;
+    height: 100px;
+}
+
+nav {
+    background-color: #f4f4f4;  /* Light Grey */
+    height: 30px;
+}
+
+#content {
+    background-color: #fff;  /* White */
+}
+
+footer {
+    background-color: #c5c5c5;  /* Dark Grey */
+}
+
+.main {
+    margin: 0 auto;
+    width: 960px;
+}
+/* ----- =columns ----- */
+.one_half { 	 width:460px; }
+.one_third {	 width:300px; }
+.two_third {	 width:620px; }
+.one_fourth {	 width:220px; }
+.three_fourth { width:700px; }
+.full_column {	 width:940px; }
+
+article {
+    position:relative;
+    margin-left:20px;
+    margin-bottom:16px;
+    float:left;
+    border: solid #000 1px;
+}
+
+
+
+
+
+
+/* clearfix */
+.clearfix:before,
+.clearfix:after { content: " "; display: table; }
+
+.clearfix:after { clear: both; }
+
+/* * For IE 6/7 only * Include this rule to trigger hasLayout and contain floats. */
+.clearfix { *zoom: 1; }

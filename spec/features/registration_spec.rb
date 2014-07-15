@@ -41,7 +41,17 @@ end
 #login username already exists
 feature "#registration_2" do
   scenario "username already exists" do
-    visit "/registration/new"
+    visit "/"
+
+    click_link "Register"
+
+    fill_in "username", with: "jess"
+    fill_in "password", with: "password"
+
+    click_button "Register"
+    expect(page).to have_content("Thank you for registering Register Username Password")
+
+    click_link "Register"
 
     fill_in "username", with: "jess"
     fill_in "password", with: "password"

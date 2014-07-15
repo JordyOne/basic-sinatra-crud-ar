@@ -1,7 +1,7 @@
 require "sinatra"
 require "active_record"
 require "gschool_database_connection"
-
+require "rack-flash"
 
 class App < Sinatra::Application
   enable :sessions
@@ -10,7 +10,7 @@ class App < Sinatra::Application
   def initialize
     super
 
-    @database_connection = GschoolDatabseConnection::DatabaseConnection.establish(ENV["RACK_ENV"])
+    @database_connection = GschoolDatabaseConnection::DatabaseConnection.establish(ENV["RACK_ENV"])
 
   end
 
@@ -25,7 +25,6 @@ class App < Sinatra::Application
   end
 
   post "/" do
-    @database_connection.sql("INSERT INTO users (username, password) VALUES ('#{params[:username]}', '#{params[:password]}');")
     id_hash= (@database_connection.sql("SELECT id FROM users WHERE username = '#{params[:username]}' AND password = '#{params[:password]}'"))
     session[:id] = id_hash.first.fetch("id")
     redirect "/"
@@ -43,7 +42,8 @@ class App < Sinatra::Application
       flash[:notice] = "That username is already taken"
       redirect "/registration/new"
     else
-    flash[:notice] = "Thank you for registering"
+      @database_connection.sql("INSERT INTO users (username, password) VALUES ('#{params[:username]}', '#{params[:password]}');")
+      flash[:notice] = "Thank you for registering"
     redirect "/"
     end
   end

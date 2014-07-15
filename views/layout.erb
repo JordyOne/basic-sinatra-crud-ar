@@ -1,17 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>My Webpage</title>
+  <link href="styles.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
-<% if flash[:notice] %>
-  <p><%= flash[:notice] %></p>
-<% end %>
-<% if flash[:error] %>
-    <p><%= flash[:error] %></p>
-<% end %>
+<div class="main">
+  <div class="gutter">
+    &nbsp
+  </div>
+  <div class="content">
+    <% if flash[:notice] %>
+        <p><%= flash[:notice] %></p>
+    <% end %>
+    <% if flash[:error] %>
+        <p><%= flash[:error] %></p>
+    <% end %>
 
-<%= yield %>
+    <%= yield %>
+  </div>
+  <div class="gutter">
+    &nbsp
+  </div>
+</div>
 </body>
 </html>
