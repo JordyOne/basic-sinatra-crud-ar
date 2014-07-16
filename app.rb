@@ -15,10 +15,10 @@ class App < Sinatra::Application
   end
 
   get "/" do
-
+    @users = @database_connection.sql("SELECT username from users")
 
     if session[:id]
-      erb :logged_in, locals: {:username => current_user_name}
+      erb :logged_in, locals: {:username => current_user_name, :all_users => @users}
     else
       erb :homepage
     end

@@ -1,5 +1,14 @@
 <h1>Welcome, <%= username %></h1>
 
+<h1>Users</h1>
+
+<ul>
+    <% all_users.each do |hash| %>
+  <li> <%= hash["username"]%> </li>
+      <% end %>
+
+</ul>
+
 <form method="post" action="/logout">
 
   <input type="submit" value="Logout"/>

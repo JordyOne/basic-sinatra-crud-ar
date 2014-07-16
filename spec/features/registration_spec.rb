@@ -49,7 +49,6 @@ feature "#registration_2" do
     fill_in "password", with: "password"
 
     click_button "Register"
-    expect(page).to have_content("Thank you for registering Register Username Password")
 
     click_link "Register"
 

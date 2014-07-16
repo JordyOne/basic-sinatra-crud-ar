@@ -14,7 +14,7 @@ feature "logged in user" do
 
     click_button "Login"
 
-
     expect(page).to have_button("Logout")
+    expect(page).to have_selector('ul li', :text=>'pgrunde')
   end
 end
