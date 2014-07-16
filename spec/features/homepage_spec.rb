@@ -16,6 +16,13 @@ end
 
 feature "Login" do
   scenario "allows user to login" do
+    visit "/registration/new"
+
+    fill_in "username", :with => "pgrunde"
+    fill_in "password", :with => "drowssap"
+
+    click_button "Register"
+
     visit "/"
 
       fill_in "username", :with => "pgrunde"

@@ -4,7 +4,9 @@
 
 <ul>
     <% list_usernames.each do |hash| %>
-  <li> <%= hash["username"]%> </li>
+ <% unless hash["username"] == username %>
+      <li><%= hash["username"] %></li>
+      <% end %>
       <% end %>
 
 </ul>

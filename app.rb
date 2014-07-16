@@ -16,17 +16,15 @@ class App < Sinatra::Application
 
   get "/" do
     if session[:id]
-      erb :logged_in, locals: {:username => current_user_name, :list_usernames=>list_usernames}
+      erb :logged_in, locals: {:username => current_user_name, :list_usernames => list_usernames}
     else
       erb :homepage
     end
   end
 
-
-
   post "/" do
-    id_hash= (@database_connection.sql("SELECT id FROM users WHERE username = '#{params[:username]}' AND password = '#{params[:password]}'"))
-    session[:id] = id_hash.first.fetch("id")
+    login_authentication
+    session_set
     redirect "/"
   end
 
@@ -44,7 +42,7 @@ class App < Sinatra::Application
     else
       @database_connection.sql("INSERT INTO users (username, password) VALUES ('#{params[:username]}', '#{params[:password]}');")
       flash[:notice] = "Thank you for registering"
-    redirect "/"
+      redirect "/"
     end
   end
 
@@ -58,12 +56,29 @@ class App < Sinatra::Application
   private
 
   def list_usernames
-   @database_connection.sql("SELECT username from users")
+    @database_connection.sql("SELECT username from users")
   end
 
   def current_user_name
+    # if session[:id]
     @database_connection.sql("SELECT username from users where id = '#{session[:id]}'").first.fetch('username')
   end
 
+  def login_authentication
+    if params[:username] == '' || params[:password] == ''
+      flash[:error] = "Please fill in all fields"
+      redirect back
+    elsif @database_connection.sql("SELECT username from users where username = '#{params[:username]}'") == []
+      flash[:notice] = "That username doesn't exist"
+      redirect back
+    elsif @database_connection.sql("SELECT username, password from users where username = '#{params[:username]}' AND password <> '#{params[:password]}'") != []
+      flash[:notice] = "Incorrect Password"
+      redirect "/"
+    end
+  end
 
+  def session_set
+    session[:id] = @database_connection.sql("SELECT id FROM users WHERE username = '#{params[:username]}' AND password = '#{params[:password]}'").first.fetch("id")
+    end
 end
+
