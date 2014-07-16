@@ -15,14 +15,14 @@ class App < Sinatra::Application
   end
 
   get "/" do
-    @users = @database_connection.sql("SELECT username from users")
-
     if session[:id]
-      erb :logged_in, locals: {:username => current_user_name, :all_users => @users}
+      erb :logged_in, locals: {:username => current_user_name, :list_usernames=>list_usernames}
     else
       erb :homepage
     end
   end
+
+
 
   post "/" do
     id_hash= (@database_connection.sql("SELECT id FROM users WHERE username = '#{params[:username]}' AND password = '#{params[:password]}'"))
@@ -57,11 +57,12 @@ class App < Sinatra::Application
 
   private
 
+  def list_usernames
+   @database_connection.sql("SELECT username from users")
+  end
+
   def current_user_name
-
-
     @database_connection.sql("SELECT username from users where id = '#{session[:id]}'").first.fetch('username')
-
   end
 
 
