@@ -10,17 +10,32 @@ class App < Sinatra::Application
   def initialize
     super
     @sql = SqlCommands.new
-
+    @username = []
 
   end
 
+
   get "/" do
+    puts "="*80
+    puts params[:sort]
+    puts "="*80
+    puts params["sort"]
+    puts "="*80
+
+    if params[:sort][:ascending]
+      usernames = @sql.list_usernames.first.sort
+    elsif params[:sort][:descending]
+      usernames = @sql.list_usernames.first.sort.reverse
+    else
+      usernames = @sql.list_usernames
+    end
     if session[:id]
-      erb :logged_in, locals: {:username => current_user_name, :list_usernames => @sql.list_usernames}
+      erb :logged_in, locals: {:username => current_user_name, :list_usernames => usernames}
     else
       erb :homepage
     end
   end
+
 
   post "/" do
     login_authentication

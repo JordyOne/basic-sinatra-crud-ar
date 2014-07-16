@@ -2,6 +2,15 @@
 
 <h1>Users</h1>
 
+<form action="/" method="get">
+  <select name="sort">
+    <option>-Select-</option>
+    <option name="ascending">Ascending</option>
+    <option name="descending">Descending</option>
+    <input type="submit" value="submit">
+  </select>
+</form>
+
 <ul>
     <% list_usernames.each do |hash| %>
  <% unless hash["username"] == username %>
