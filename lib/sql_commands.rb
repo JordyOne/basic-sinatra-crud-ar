@@ -30,4 +30,7 @@ class SqlCommands
     @database_connection.sql("SELECT id FROM users WHERE username = '#{username}' AND password = '#{password}'")
   end
 
+  def delete_username(username)
+    @database_connection.sql("DELETE from users where username = '#{username}'")
+  end
 end

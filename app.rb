@@ -63,6 +63,11 @@ class App < Sinatra::Application
     redirect "/"
   end
 
+  post "/delete" do
+    @sql.delete_username(params[:username])
+    redirect "/"
+  end
+
   private
 
   def current_user_name
