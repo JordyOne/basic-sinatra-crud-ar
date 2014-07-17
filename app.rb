@@ -68,6 +68,11 @@ class App < Sinatra::Application
     redirect "/"
   end
 
+  post "/fish" do
+    @sql.create_fish(params[:newfish], session[:id], params[:wiki])
+    redirect "/"
+  end
+
   private
 
   def current_user_name

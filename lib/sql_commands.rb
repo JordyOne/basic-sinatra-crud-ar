@@ -33,4 +33,15 @@ class SqlCommands
   def delete_username(username)
     @database_connection.sql("DELETE from users where username = '#{username}'")
   end
+
+  def create_fish(name, session_id, wiki)
+    @database_connection.sql("INSERT INTO fish (name, users_id, fish_wiki) VALUES ('#{name}', '#{session_id}', '#{wiki}')")
+  end
+  def fish_list
+    def list_usernames
+      @database_connection.sql("SELECT (name, fish_wiki) FROM fish where id ")
+    end
+  end
 end
+
+
