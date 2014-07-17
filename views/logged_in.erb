@@ -11,21 +11,20 @@
 </form>
 
 <ul>
-    <% list_usernames.each do |registered_user| %>
- <% unless registered_user == username %>
-      <li><%= registered_user %></li>
-      <% end %>
-      <% end %>
-
-</ul>
-
-<ul>
   <% list_usernames.each do |registered_user| %>
       <% unless registered_user == username %>
           <li><%= registered_user %></li>
       <% end %>
   <% end %>
+</ul>
 
+<h1>Your Fish List</h1>
+<ul>
+  <% if user_fish != [] %>
+      <% user_fish.each do |fish| %>
+          <li><a href="<%= fish['fish_wiki'] %>"><%= fish['name'] %></a></li>
+      <% end %>
+  <% end %>
 </ul>
 
 <form action="/delete" method="post">
@@ -34,23 +33,16 @@
   <input class="list_item" type="submit" value="Delete User"/>
 </form>
 
-<form method="post" action="/logout">
-
-  <input type="submit" value="Logout"/>
-
-</form>
 
 <form action="/fish" method="post">
   <li><label for="Fish">Fish Name</label></li>
-  <li><input class="list_item" type="text" name="newfish" id="newfish"/></li>
+  <li><input class="list_item" type="text" name="newfish" id="newfish" required/></li>
   <li><label for="Fish">Fish Wiki</label></li>
-  <li><input class="list_item" type="text" name="wiki" id="wiki"/></li>
+  <li><input class="list_item" type="text" name="wiki" id="wiki" required/></li>
 
   <input class="list_item" type="submit" value="Create Fish"/>
 </form>
 
 <form method="post" action="/logout">
-
   <input type="submit" value="Logout"/>
-
 </form>

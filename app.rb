@@ -25,8 +25,10 @@ class App < Sinatra::Application
       usernames = username_list
     end
 
+    user_fish = @sql.list_fish(session[:id])
+
     if session[:id]
-      erb :logged_in, locals: {:username => current_user_name, :list_usernames => usernames}
+      erb :logged_in, locals: {:username => current_user_name, :list_usernames => usernames, :user_fish => user_fish}
     else
       erb :homepage
     end
@@ -101,5 +103,6 @@ class App < Sinatra::Application
       username["username"].downcase unless @sql.list_usernames == []
     end
   end
+
 end
 
