@@ -16,19 +16,15 @@ class App < Sinatra::Application
 
 
   get "/" do
-    puts "="*80
-    puts params[:sort]
-    puts "="*80
-    puts params["sort"]
-    puts "="*80
 
-    if params[:sort][:ascending]
-      usernames = @sql.list_usernames.first.sort
-    elsif params[:sort][:descending]
-      usernames = @sql.list_usernames.first.sort.reverse
+    if params[:sort_ascending]
+      usernames = username_list.sort
+    elsif params[:sort_descending]
+      usernames = username_list.sort.reverse
     else
-      usernames = @sql.list_usernames
+      usernames = username_list
     end
+
     if session[:id]
       erb :logged_in, locals: {:username => current_user_name, :list_usernames => usernames}
     else
@@ -39,7 +35,7 @@ class App < Sinatra::Application
 
   post "/" do
     login_authentication
-    session_set
+    session[:id] = session_set
     redirect "/"
   end
 
@@ -87,7 +83,13 @@ class App < Sinatra::Application
   end
 
   def session_set
-    session[:id] = @sql.current_user_id(params[:username], params[:password]).first.fetch("id")
+    @sql.current_user_id(params[:username], params[:password]).first.fetch("id")
+  end
+
+  def username_list
+    @sql.list_usernames.map do |username|
+      username["username"].downcase unless @sql.list_usernames == []
     end
+  end
 end
 
